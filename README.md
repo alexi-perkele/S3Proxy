@@ -1,2 +1,2 @@
-# S3Proxy
+# s3proxy
 files and buckets
