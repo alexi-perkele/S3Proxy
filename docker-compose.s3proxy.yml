@@ -1,0 +1,30 @@
+version: '3'
+services:
+  s3proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile.s3proxy
+    ports:
+       - '8000:8000'
+    privileged: true
+
+  minio:
+    image: "quay.io/minio/minio"
+    ports:
+        - '9000:9000'
+        - '9001:9001'
+    volumes:
+        - 'minio_data:/data'
+    environment:
+      - MINIO_ROOT_USER=user
+      - MINIO_ROOT_PASSWORD=qwerty123
+      - MINIO_DEFAULT_BUCKETS=bucket_name
+    command: server --console-address ":9001" /data
+
+volumes:
+      minio_data:
+        driver: local
+ #   volumes:
+  #    - /usr/src/testsuite:../
+    #depends_on:
+     # - s3proxy
