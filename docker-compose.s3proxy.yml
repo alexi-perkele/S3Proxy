@@ -7,6 +7,8 @@ services:
     ports:
        - '8000:8000'
     privileged: true
+    depends_on:
+      - minio  # Ensure minio starts before s3proxy
 
   minio:
     image: "quay.io/minio/minio"
@@ -22,9 +24,5 @@ services:
     command: server --console-address ":9001" /data
 
 volumes:
-      minio_data:
-        driver: local
- #   volumes:
-  #    - /usr/src/testsuite:../
-    #depends_on:
-     # - s3proxy
+  minio_data:
+    driver: local
